@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مساري للبكالوريا</title>
+  <style>
+    :root{
+      --bg: #050b12;
+      --bg-2: #0b1628;
+      --panel: rgba(18, 28, 42, 0.9);
+      --panel-strong: #101d2c;
+      --blue: #0d4db8;
+      --blue-2: #123f8d;
+      --gold: #d9b76b;
+      --gold-2: #f0d38a;
+      --white: #edf3ff;
+      --muted: #a9b8d3;
+      --line: rgba(217,183,107,0.35);
+      --shadow: 0 16px 40px rgba(0, 0, 0, 0.38);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body{
+      margin:0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(13,77,184,.35), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(217,183,107,.12), transparent 24%),
+        linear-gradient(135deg, var(--bg), var(--bg-2));
+      color: var(--white);
+      line-height:1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width:100%; display:block; }
+
+    .container{
+      width:min(1180px, calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .topbar{
+      position: sticky;
+      top:0;
+      z-index:999;
+      backdrop-filter: blur(14px);
+      background: rgba(12,17,23,0.72);
+      border-bottom:1px solid rgba(217,183,107,0.18);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      min-height:72px;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      font-size:1.2rem;
+      letter-spacing:1px;
+    }
+
+    .brand-mark{
+      width:42px;
+      height:42px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      color: #0a0d12;
+      font-weight:900;
+      box-shadow: 0 8px 22px rgba(217,183,107,0.5);
+    }
+
+    .nav-links{
+      display:flex;
+      gap:24px;
+      color: var(--muted);
+      font-size:0.96rem;
+    }
+
+    .nav-links a:hover{ color: var(--gold); }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:14px;
+      padding:14px 22px;
+      border:1px solid var(--line);
+      cursor:pointer;
+      transition:0.25s ease;
+      font-weight:700;
+    }
+
+    .btn.primary{
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      color:#0b0d10;
+      border:none;
+      box-shadow: 0 10px 25px rgba(217,183,107,0.35);
+    }
+
+    .btn.primary:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 32px rgba(217,183,107,0.4);
+    }
+
+    .btn.secondary{
+      background: rgba(255,255,255,0.03);
+      color: var(--white);
+      border:1px solid rgba(217,183,107,0.25);
+    }
+
+    .hero{
+      padding:64px 0 40px;
+    }
+
+    .hero-inner{
+      display:grid;
+      grid-template-columns:1.2fr 0.8fr;
+      gap:26px;
+      align-items:center;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      background: rgba(13,77,184,0.2);
+      border:1px solid rgba(217,183,107,0.2);
+      border-radius:999px;
+      color: var(--gold-2);
+      font-size:0.85rem;
+      margin-bottom:16px;
+    }
+
+    .hero h1{
+      font-size: clamp(3rem, 5vw, 5.4rem);
+      line-height:1.08;
+      margin:0 0 18px;
+      letter-spacing: 2px;
+      font-weight:900;
+      text-shadow: 0 8px 26px rgba(13,77,184,0.4);
+    }
+
+    .hero h1 .ornament{
+      display:block;
+      background: linear-gradient(135deg, rgba(255,255,255,1), rgba(217,183,107,1), rgba(119,140,255,1));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      color: transparent;
+    }
+
+    .hero p{
+      color: var(--muted);
+      margin:0 0 24px;
+      font-size:1.1rem;
+      max-width:620px;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-bottom:30px;
+    }
+
+    .mini-stats{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+      gap:14px;
+      max-width:520px;
+    }
+
+    .stat-box{
+      background: rgba(255,255,255,0.02);
+      border:1px solid rgba(217,183,107,0.14);
+      border-radius:18px;
+      padding:14px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-box strong{
+      display:block;
+      font-size:1.4rem;
+      color:var(--gold-2);
+    }
+    .stat-box span{
+      font-size:0.78rem;
+      color: var(--muted);
+    }
+
+    .hero-visual{
+      position:relative;
+      min-height:520px;
+      display:grid;
+      place-items:center;
+    }
+
+    .glow-card{
+      width:min(100%, 420px);
+      background: linear-gradient(180deg, rgba(15,26,39,0.9), rgba(10,17,27,0.95));
+      border:1px solid rgba(217,183,107,0.25);
+      border-radius:26px;
+      padding:20px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .glow-card::before{
+      content:"";
+      position:absolute;
+      inset:-30% -20% auto auto;
+      width:220px;
+      height:220px;
+      background: radial-gradient(circle, rgba(13,77,184,0.7), transparent 62%);
+      filter: blur(18px);
+    }
+
+    .screen-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px;
+      color:var(--gold-2);
+      font-weight:700;
+    }
+
+    .dots{
+      display:flex;
+      gap:8px;
+    }
+    .dots span{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background: rgba(255,255,255,0.2);
+      display:inline-block;
+    }
+    .dots span:nth-child(1){ background:#ff5f56; }
+    .dots span:nth-child(2){ background:#ffbd2e; }
+    .dots span:nth-child(3){ background:#27c93f; }
+
+    .path-window{
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(16, 31, 48, 0.95), rgba(10, 18, 26, 0.95));
+      border:1px solid rgba(217,183,107,0.2);
+      padding:18px;
+    }
+
+    .subject-row{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+      color: var(--muted);
+      font-size:0.88rem;
+    }
+
+    .subject-row .pill{
+      background: rgba(13,77,184,0.28);
+      border:1px solid rgba(217,183,107,0.2);
+      color: var(--white);
+      border-radius:12px;
+      padding:8px 12px;
+      min-width:110px;
+      text-align:center;
+    }
+
+    .bars{
+      display:flex;
+      align-items:flex-end;
+      gap:8px;
+      height:160px;
+      margin-top:18px;
+      padding-top:20px;
+      border-top:1px solid rgba(217,183,107,0.18);
+    }
+
+    .bars span{
+      display:block;
+      width:100%;
+      border-radius:12px 12px 0 0;
+      background: linear-gradient(180deg, var(--gold), var(--blue));
+      box-shadow: 0 18px 28px rgba(13,77,184,0.28);
+    }
+
+    .section{
+      padding:30px 0 10px;
+    }
+
+    .header-block{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:18px;
+    }
+
+    .header-block h2{
+      margin:0;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+    }
+
+    .header-block p{
+      margin:0;
+      color:var(--muted);
+      max-width:640px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(220px, 1fr));
+      gap:20px;
+    }
+
+    .track-card{
+      position:relative;
+      background: linear-gradient(180deg, rgba(16, 25, 36, 0.9), rgba(8, 16, 24, 0.95));
+      border:1px solid rgba(217,183,107,0.16);
+      border-radius:22px;
+      padding:22px 18px;
+      box-shadow: var(--shadow);
+      transition:0.3s ease;
+      cursor:pointer;
+      overflow:hidden;
+    }
+
+    .track-card:hover{
+      transform: translateY(-4px);
+      border-color: rgba(217,183,107,0.4);
+    }
+
+    .track-card.active{
+      border-color: rgba(217,183,107,0.68);
+      box-shadow: 0 16px 38px rgba(13,77,184,0.25);
+    }
+
+    .track-icon{
+      width:54px;
+      height:54px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      margin-bottom:14px;
+      font-size:1.5rem;
+      background: linear-gradient(135deg, rgba(13,77,184,.6), rgba(217,183,107,.22));
+      border:1px solid rgba(217,183,107,0.2);
+    }
+
+    .track-card h3{
+      margin:0 0 8px;
+      font-size:1.35rem;
+    }
+
+    .track-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:0.96rem;
+    }
+
+    .content-panel{
+      background: rgba(8, 17, 26, 0.75);
+      border:1px solid rgba(217,183,107,0.14);
+      border-radius:26px;
+      padding:22px;
+      box-shadow: var(--shadow);
+      margin-top:26px;
+    }
+
+    .tab-info{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:18px;
+      border-bottom:1px solid rgba(217,183,107,0.15);
+      padding-bottom:12px;
+    }
+
+    .tab-info h3{
+      margin:0;
+      font-size:1.5rem;
+    }
+
+    .tag{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(13,77,184,0.12);
+      border:1px solid rgba(217,183,107,0.2);
+      color: var(--gold-2);
+      font-size:0.8rem;
+      font-weight:700;
+    }
+
+    .subjects-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+      gap:18px;
+    }
+
+    .subject-card{
+      background: linear-gradient(180deg, rgba(15,24,35,0.9), rgba(9,16,23,0.95));
+      border:1px solid rgba(217,183,107,0.16);
+      border-radius:20px;
+      padding:18px 16px;
+      transition:0.25s ease;
+      min-height:170px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .subject-card:hover{
+      transform:translateY(-3px);
+      border-color: rgba(217,183,107,0.4);
+    }
+
+    .subject-card .meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:12px;
+    }
+
+    .subject-card .meta .icon{
+      width:42px;
+      height:42px;
+      border-radius:12px;
+      background: linear-gradient(135deg, rgba(13,77,184,.5), rgba(217,183,107,.25));
+      display:grid;
+      place-items:center;
+      font-size:1.2rem;
+    }
+
+    .subject-card h4{
+      margin:0 0 8px;
+      font-size:1.1rem;
+    }
+
+    .subject-card p{
+      margin:0;
+      font-size:0.9rem;
+      color: var(--muted);
+    }
+
+    .eval-link{
+      margin-top:14px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:var(--gold-2);
+      font-weight:700;
+      font-size:0.88rem;
+    }
+
+    .evaluations{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(240px, 1fr));
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .eval-card{
+      background: rgba(255,255,255,0.02);
+      border:1px solid rgba(217,183,107,0.18);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .eval-card h4{
+      margin:0 0 8px;
+      font-size:1.08rem;
+    }
+
+    .eval-card p{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-size:0.92rem;
+    }
+
+    .eval-card a{
+      color: var(--gold-2);
+      font-weight:700;
+    }
+
+    .colleges{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+      gap:16px;
+      margin-top:20px;
+    }
+
+    .college-card{
+      background: linear-gradient(180deg, rgba(15,24,35,0.95), rgba(10,18,25,0.95));
+      border:1px solid rgba(217,183,107,0.18);
+      border-radius:20px;
+      padding:18px 16px;
+      min-height:200px;
+    }
+
+    .college-card .title{
+      font-weight:800;
+      margin-bottom:12px;
+      color:var(--gold-2);
+      font-size:1.05rem;
+    }
+
+    .college-card ul{
+      margin:0;
+      padding-right:18px;
+      color: var(--muted);
+      font-size:0.92rem;
+    }
+
+    .college-card li{
+      margin-bottom:8px;
+    }
+
+    .footer{
+      margin-top:54px;
+      padding:24px 0 52px;
+      border-top:1px solid rgba(217,183,107,0.18);
+      color: var(--muted);
+      font-size:0.9rem;
+    }
+
+    .footer-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 980px){
+      .hero-inner{ grid-template-columns:1fr; }
+      .cards{ grid-template-columns:repeat(2,minmax(180px,1fr)); }
+      .subjects-grid{ grid-template-columns:repeat(2,minmax(180px,1fr)); }
+      .colleges{ grid-template-columns:repeat(2,minmax(180px,1fr)); }
+      .nav-links{ display:none; }
+    }
+
+    @media (max-width: 640px){
+      .cards, .subjects-grid, .colleges, .evaluations{ grid-template-columns:1fr; }
+      .mini-stats{ grid-template-columns:1fr; }
+      .header-block{ display:block; }
+      .hero{ padding-top:32px; }
+      .nav{ min-height:64px; }
+      .btn{ width:100%; }
+      .hero-actions{ display:grid; grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-mark">م</div>
+        <span>مساري</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#home">الرئيسية</a>
+        <a href="#paths">المسارات</a>
+        <a href="#subjects">المواد</a>
+        <a href="#colleges">الكليات</a>
+      </nav>
+
+      <a href="#paths" class="btn primary">ابدأ الآن</a>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <div class="eyebrow">📘 مسار الطالب نحو المستقبل</div>
+          <h1>
+            <span class="ornament">مساري</span>
+            <span>للبكالوريا</span>
+          </h1>
+          <p>
+            موقع يساعد الطالب على اختيار المسار المناسب، معرفة المواد الدراسية،
+            ربط كل مادة بكتاب التقييمات الرسمي لوزارة التربية والتعليم،
+            ومعرفة الكليات المتاحة والتنسيقات المقاربة.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#paths" class="btn primary">اختيار المسار</a>
+            <a href="#subjects" class="btn secondary">استعرض المواد</a>
+          </div>
+
+          <div class="mini-stats">
+            <div class="stat-box">
+              <strong>4</strong>
+              <span>مسارات رئيسية</span>
+            </div>
+            <div class="stat-box">
+              <strong>20+</strong>
+              <span>مواد تعليمية</span>
+            </div>
+            <div class="stat-box">
+              <strong>100%</strong>
+              <span>ربط بالوزارة</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="glow-card">
+            <div class="screen-top">
+              <span>لوحة المسار</span>
+              <div class="dots">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+
+            <div class="path-window">
+              <div class="subject-row">
+                <div class="pill">الطب</div>
+                <div class="pill">رياضيات</div>
+              </div>
+
+              <div class="subject-row">
+                <div class="pill">كيمياء</div>
+                <div class="pill">أحياء</div>
+              </div>
+
+              <div class="bars">
+                <span style="height:70%"></span>
+                <span style="height:88%"></span>
+                <span style="height:92%"></span>
+                <span style="height:68%"></span>
+                <span style="height:76%"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="paths" class="section">
+      <div class="container">
+        <div class="header-block">
+          <h2>المسارات</h2>
+          <p>اختر المسار المناسب لك، وستظهر لك المواد المرتبطة به وكلياته المتاحة.</p>
+        </div>
+
+        <div id="trackCards" class="cards"></div>
+
+        <div class="content-panel">
+          <div class="tab-info">
+            <h3 id="trackTitle">مسار الطب وعلوم الحياة</h3>
+            <span class="tag" id="trackTag">العلوم الطبية</span>
+          </div>
+
+          <div id="subjectsGrid" class="subjects-grid"></div>
+
+          <div class="evaluations">
+            <div class="eval-card">
+              <h4>كتب التقييمات</h4>
+              <p>روابط مباشرة إلى كتب التقييمات الخاصة بكل مادة من وزارة التربية والتعليم.</p>
+              <a href="#">عرض الكتب الرسمية</a>
+            </div>
+
+            <div class="eval-card">
+              <h4>الاستراتيجيات</h4>
+              <p>مراجعات قصيرة، تسهيل للمادة، وأفكار لاستراتيجية الدراسة المثلى.</p>
+              <a href="#">شاهد الخطة</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="colleges" class="section">
+      <div class="container">
+        <div class="header-block">
+          <h2>الكليات والتنسيقات المقاربة</h2>
+          <p>معلومات مختصرة عن الجامعات والكليات الأكثر قرباً لكل مسار.</p>
+        </div>
+
+        <div id="collegesGrid" class="colleges"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© 2026 مساري للبكالوريا</div>
+      <div>إعداد وتصميم: ندى محمد</div>
+    </div>
+  </footer>
+
+  <script>
+    const tracks = [
+      {
+        key: "medicine",
+        name: "الطب وعلوم الحياة",
+        tag: "العلوم الطبية",
+        icon: "🧬",
+        description: "مسار العلوم الطبية والبيولوجية ويعتمد على الرياضيات والكيمياء والأحياء.",
+        subjects: [
+          { name: "الرياضيات", icon: "📐", desc: "أساس التحليل والقياس..." },
+          { name: "الكيمياء", icon: "🧪", desc: "مادة أساسية للطب والصيدلة..." },
+          { name: "الأحياء", icon: "🧬", desc: "فهم الوظائف الحيوية..." },
+          { name: "الفيزياء", icon: "⚛️", desc: "تطبيقات علمية للطب..." },
+          { name: "اللغة العربية", icon: "📚", desc: "مهارات التعبير والتحليل..." },
+          { name: "الإنجليزية", icon: "🌍", desc: "قراءة ومفردات علمية..." }
+        ],
+        colleges: [
+          { title: "كلية الطب", list: ["الطب البشري", "طب الأسنان", "التمريض", "الصيدلة"] },
+          { title: "كلية العلوم", list: ["علم الأحياء", "الكيمياء", "البيئة", "العلوم الطبية"] },
+          { title: "كلية الصيدلة", list: ["صيدلة", "تقانة صيدلانية", "علم العقاقير"] }
+        ]
+      },
+      {
+        key: "engineering",
+        name: "هندسة وعلوم الحاسب",
+        tag: "التكنولوجيا والابتكار",
+        icon: "💻",
+        description: "مسار مهندس ومطور، يغطي الرياضيات والبرمجة والهندسة.",
+        subjects: [
+          { name: "الرياضيات", icon: "📐", desc: "الأساس في الهندسة..." },
+          { name: "الفيزياء", icon: "⚛️", desc: "أساس تصميم الأنظمة..." },
+          { name: "علوم الحاسب", icon: "💻", desc: "برمجة ومنطق الحاسب..." },
+          { name: "اللغة الإنجليزية", icon: "🌍", desc: "مفردات فنية..." },
+          { name: "الكيمياء", icon: "🧪", desc: "تطبيقات هندسية..." },
+          { name: "اللغة العربية", icon: "📚", desc: "التعبير والتحليل..." }
+        ],
+        colleges: [
+          { title: "كلية الهندسة", list: ["هندسة الحاسبات", "هندسة البرمجيات", "الالكترونيات"] },
+          { title: "كلية علوم الحاسب", list: ["علوم الحاسب", "الذكاء الاصطناعي", "شبكات"] },
+          { title: "كلية التقنية", list: ["التصميم الصناعي", "الروبوتات", "الأنظمة الذكية"] }
+        ]
+      },
+      {
+        key: "arts",
+        name: "الآداب والفنون",
+        tag: "الإبداع والتواصل",
+        icon: "🎨",
+        description: "مسار يركز على الفنون واللغة والتاريخ والثقافة والفكر.",
+        subjects: [
+          { name: "اللغة العربية", icon: "📚", desc: "تحليل نصي وتأليف..." },
+          { name: "التاريخ", icon: "🕰️", desc: "دراسة الحاضر عبر الماض..." },
+          { name: "الفنون", icon: "🎨", desc: "تصميم وفن تشكيلي..." },
+          { name: "الاجتماعيات", icon: "🤝", desc: "فهم المجتمعات..." },
+          { name: "الإنجليزية", icon: "🌍", desc: "قراءة ومحادثة..." },
+          { name: "الفلسفة", icon: "🧠", desc: "فكر نقدي..." }
+        ],
+        colleges: [
+          { title: "كلية الآداب", list: ["اللغة العربية", "اللغة الإنجليزية", "التاريخ"] },
+          { title: "كلية الفنون", list: ["الفن التشكيلي", "الفنون المسرحية", "التصميم"] },
+          { title: "كلية الإعلام", list: ["إعلام", "علاقات عامة", "اتصال"] }
+        ]
+      },
+      {
+        key: "business",
+        name: "إدارة الأعمال",
+        tag: "الاقتصاد والنجاح",
+        icon: "📊",
+        description: "مسار إدارة المشاريع والاقتصاد والمالية والتسويق.",
+        subjects: [
+          { name: "الاقتصاد", icon: "📈", desc: "أساس القرار الاقتصادي..." },
+          { name: "إدارة الأعمال", icon: "📊", desc: "خطط واستراتيجيات..." },
+          { name: "الرياضيات", icon: "📐", desc: "تحليل البيانات..." },
+          { name: "اللغة الإنجليزية", icon: "🌍", desc: "مفردات الأعمال..." },
+          { name: "الفيزياء", icon: "⚛️", desc: "علم تطبيقات..." },
+          { name: "التربية الإسلامية", icon: "🕌", desc: "القيم والأخلاق..." }
+        ],
+        colleges: [
+          { title: "كلية إدارة الأعمال", list: ["إدارة أعمال", "محاسبة", "تسويق"] },
+          { title: "كلية الاقتصاد", list: ["اقتصاد", "تمويل", "إحصاء"] },
+          { title: "كلية القانون", list: ["قانون", "إدارة", "شؤون عامة"] }
+        ]
+      }
+    ];
+
+    const trackCards = document.getElementById("trackCards");
+    const subjectsGrid = document.getElementById("subjectsGrid");
+    const collegesGrid = document.getElementById("collegesGrid");
+    const trackTitle = document.getElementById("trackTitle");
+    const trackTag = document.getElementById("trackTag");
+
+    function renderTrackCards() {
+      trackCards.innerHTML = tracks.map((track, idx) => `
+        <div class="track-card ${idx === 0 ? "active" : ""}" data-key="${track.key}" tabindex="0">
+          <div class="track-icon">${track.icon}</div>
+          <h3>${track.name}</h3>
+          <p>${track.description}</p>
+        </div>
+      `).join("");
+
+      document.querySelectorAll(".track-card").forEach(card => {
+        card.addEventListener("click", () => {
+          document.querySelectorAll(".track-card").forEach(c => c.classList.remove("active"));
+          card.classList.add("active");
+          const key = card.dataset.key;
+          renderTrack(key);
+        });
+      });
+    }
+
+    function renderTrack(key) {
+      const selected = tracks.find(t => t.key === key) || tracks[0];
+      trackTitle.textContent = selected.name;
+      trackTag.textContent = selected.tag;
+
+      subjectsGrid.innerHTML = selected.subjects.map(subject => `
+        <div class="subject-card">
+          <div class="meta">
+            <div class="icon">${subject.icon}</div>
+            <span class="tag">مادة</span>
+          </div>
+          <div>
+            <h4>${subject.name}</h4>
+            <p>${subject.desc}</p>
+          </div>
+          <a href="#" class="eval-link">📘 كتاب التقييمات</a>
+        </div>
+      `).join("");
+
+      collegesGrid.innerHTML = selected.colleges.map(college => `
+        <div class="college-card">
+          <div class="title">${college.title}</div>
+          <ul>
+            ${college.list.map(item => `<li>${item}</li>`).join("")}
+          </ul>
+        </div>
+      `).join("");
+    }
+
+    renderTrackCards();
+    renderTrack("medicine");
+  </script>
+</body>
+</html>
